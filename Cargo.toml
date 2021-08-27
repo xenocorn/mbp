@@ -1,0 +1,10 @@
+[package]
+name = "mbp"
+version = "1.0.0"
+authors = ["XenoCorn"]
+repository = "https://github.com/xenocorn/mbp"
+readme = "README.md"
+license = "BSD-3-Clause-Clear"
+edition = "2018"
+
+[dependencies]
