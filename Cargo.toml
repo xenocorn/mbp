@@ -1,6 +1,6 @@
 [package]
 name = "mbp"
-version = "1.0.0"
+version = "1.1.0"
 authors = ["XenoCorn"]
 description = "Codec for my petproject protocol"
 repository = "https://github.com/xenocorn/mbp"
@@ -8,4 +8,9 @@ readme = "README.md"
 license = "BSD-3-Clause-Clear"
 edition = "2018"
 
+[features]
+net = ["rust_sfp"]
+all = ["net"]
+
 [dependencies]
+rust_sfp = { version = "0.5", optional = true }
