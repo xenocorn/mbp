@@ -95,6 +95,10 @@ impl Connection{
             Err(err) => { Err(err) }
         }
     }
+    pub fn split(self) -> io::Result<(ConnectionReceiver, ConnectionSender)>{
+        let next = Self::from(self.stream.try_clone()?);
+        Ok((ConnectionReceiver::from(self), ConnectionSender::from(next)))
+    }
 }
 
 #[cfg(feature = "net")]

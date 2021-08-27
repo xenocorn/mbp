@@ -1,6 +1,6 @@
 [package]
 name = "mbp"
-version = "1.1.0"
+version = "1.2.0"
 authors = ["XenoCorn"]
 description = "Codec for my petproject protocol"
 repository = "https://github.com/xenocorn/mbp"
