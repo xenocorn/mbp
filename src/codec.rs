@@ -43,6 +43,7 @@ impl fmt::Display for DecodeError{
 pub enum Package{
     Subscribe{
         topic: String,
+        is_regular: bool,
         priority: u8,
         is_subscribe: bool,
         silent_mod: bool
@@ -67,6 +68,7 @@ impl Package{
         match self{
             Package::Subscribe{
                 topic,
+                is_regular,
                 priority,
                 is_subscribe,
                 silent_mod
@@ -79,6 +81,9 @@ impl Package{
                 }
                 if silent_mod{
                     header |= 0b00010000;
+                }
+                if is_regular{
+                    header |= 0b00001000;
                 }
                 let mut result = vec![header, priority, topic_len];
                 result.append(&mut topic.into_bytes());
@@ -201,8 +206,10 @@ impl Package{
                 //Sub
                 let is_subscribe = header & 0b00100000 > 0;
                 let silent_mod = header & 0b00010000 > 0;
+                let is_regular = header & 0b00001000 > 0;
                 Ok(Package::Subscribe{
                     topic,
+                    is_regular,
                     priority,
                     is_subscribe,
                     silent_mod
@@ -247,6 +254,19 @@ mod package_test{
     fn subscription_test(){
         let package = Package::Subscribe{
             topic: "some.topic".to_string(),
+            is_regular: true,
+            priority: 111,
+            is_subscribe: true,
+            silent_mod: true
+        };
+        check_codec_correct(package, false, false);
+    }
+
+    #[test]
+    fn subscription_service_test(){
+        let package = Package::Subscribe{
+            topic: "some.topic".to_string(),
+            is_regular: false,
             priority: 111,
             is_subscribe: true,
             silent_mod: true
@@ -258,6 +278,7 @@ mod package_test{
     fn subscription_void_topic_test(){
         let package = Package::Subscribe{
             topic: "".to_string(),
+            is_regular: true,
             priority: 111,
             is_subscribe: true,
             silent_mod: true
