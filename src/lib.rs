@@ -293,3 +293,15 @@ impl Server{
         Ok((Connection::from(stream), addr))
     }
 }
+
+#[cfg(feature = "net")]
+impl Iterator for Server{
+    type Item = (Connection,SocketAddr);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        match self.accept(){
+            Ok((c, s)) => { Some((c, s)) }
+            Err(_) => { None }
+        }
+    }
+}

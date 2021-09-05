@@ -228,7 +228,7 @@ mod package_test{
                         if expect_decode_error{
                             assert!(true);
                         }else{
-                            assert!(false, format!("Unexpected decode error: {}", err))
+                            assert!(false, "Unexpected decode error: {}", err)
                         }
                     }
                 }
@@ -237,7 +237,7 @@ mod package_test{
                 if expect_encode_error{
                     assert!(true);
                 }else{
-                    assert!(false, format!("Unexpected encode error: {}", err))
+                    assert!(false, "Unexpected encode error: {}", err)
                 }
             }
         }
